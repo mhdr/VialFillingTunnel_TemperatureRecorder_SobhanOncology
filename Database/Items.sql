@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Items]
+(
+	[ItemId] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [ItemName] NVARCHAR(MAX) NOT NULL 
+)

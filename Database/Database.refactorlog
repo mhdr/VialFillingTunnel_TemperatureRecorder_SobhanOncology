@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="c94abf04-c985-4089-b8b6-65e183b5caa5" ChangeDateTime="03/26/2015 15:43:00">
+    <Property Name="ElementName" Value="[dbo].[Items].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Items]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ItemId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="61dad824-c683-4b17-b078-dffec13a0680" ChangeDateTime="03/26/2015 15:44:25">
+    <Property Name="ElementName" Value="[dbo].[Logs].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Logs]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LogId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="883af3bd-8726-40b8-bffa-d1c4b1b9239f" ChangeDateTime="03/26/2015 15:46:34">
+    <Property Name="ElementName" Value="[dbo].[Hashes].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Hashes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="HashId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6578fe76-27e3-4c1a-b52c-ada32a2d954f" ChangeDateTime="03/26/2015 15:47:01">
+    <Property Name="ElementName" Value="[dbo].[Hashes].[Value]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Hashes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="HashValue" />
+  </Operation>
+</Operations>
