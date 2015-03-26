@@ -4,16 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TemperatureRecorderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Hashes">
-          <Key>
-            <PropertyRef Name="HashId" />
-          </Key>
-          <Property Name="HashId" Type="int" Nullable="false" />
-          <Property Name="LogId" Type="int" Nullable="false" />
-          <Property Name="HashValue" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
-        </EntityType>
+    <Schema Namespace="TemperatureRecorderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Items">
           <Key>
             <PropertyRef Name="ItemId" />
@@ -29,20 +20,9 @@
           <Property Name="ItemId" Type="int" Nullable="false" />
           <Property Name="ItemValue" Type="float" Nullable="false" />
           <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="HashValue" Type="nvarchar(max)" Nullable="false" />
           <Property Name="TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Hashes_Logs">
-          <End Role="Logs" Type="Self.Logs" Multiplicity="1" />
-          <End Role="Hashes" Type="Self.Hashes" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Logs">
-              <PropertyRef Name="LogId" />
-            </Principal>
-            <Dependent Role="Hashes">
-              <PropertyRef Name="LogId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Logs_ToItems">
           <End Role="Items" Type="Self.Items" Multiplicity="1" />
           <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
@@ -56,40 +36,32 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TemperatureRecorderModelStoreContainer">
-          <EntitySet Name="Hashes" EntityType="Self.Hashes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Hashes_Logs" Association="Self.FK_Hashes_Logs">
-            <End Role="Logs" EntitySet="Logs" />
-            <End Role="Hashes" EntitySet="Hashes" />
-          </AssociationSet>
           <AssociationSet Name="FK_Logs_ToItems" Association="Self.FK_Logs_ToItems">
             <End Role="Items" EntitySet="Items" />
             <End Role="Logs" EntitySet="Logs" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TemperatureRecorderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Hash">
-          <Key>
-            <PropertyRef Name="HashId" />
-          </Key>
-          <Property Name="HashId" Type="Int32" Nullable="false" />
-          <Property Name="LogId" Type="Int32" Nullable="false" />
-          <Property Name="HashValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="Log" Relationship="Self.FK_Hashes_Logs" FromRole="Hashes" ToRole="Logs" />
-        </EntityType>
+        <EntityContainer Name="TemperatureRecorderEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Items" EntityType="TemperatureRecorderModel.Item" />
+          <EntitySet Name="Logs" EntityType="TemperatureRecorderModel.Log" />
+          <AssociationSet Name="FK_Logs_ToItems" Association="TemperatureRecorderModel.FK_Logs_ToItems">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="ItemId" />
           </Key>
           <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Logs" Relationship="Self.FK_Logs_ToItems" FromRole="Items" ToRole="Logs" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Logs" Relationship="TemperatureRecorderModel.FK_Logs_ToItems" FromRole="Item" ToRole="Log" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -99,79 +71,45 @@
           <Property Name="ItemId" Type="Int32" Nullable="false" />
           <Property Name="ItemValue" Type="Double" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="Hashes" Relationship="Self.FK_Hashes_Logs" FromRole="Logs" ToRole="Hashes" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_Logs_ToItems" FromRole="Logs" ToRole="Items" />
+          <Property Name="HashValue" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TimeStamp" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Item" Relationship="TemperatureRecorderModel.FK_Logs_ToItems" FromRole="Log" ToRole="Item" />
         </EntityType>
-        <Association Name="FK_Hashes_Logs">
-          <End Role="Logs" Type="Self.Log" Multiplicity="1" />
-          <End Role="Hashes" Type="Self.Hash" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Logs">
-              <PropertyRef Name="LogId" />
-            </Principal>
-            <Dependent Role="Hashes">
-              <PropertyRef Name="LogId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Logs_ToItems">
-          <End Role="Items" Type="Self.Item" Multiplicity="1" />
-          <End Role="Logs" Type="Self.Log" Multiplicity="*" />
+          <End Type="TemperatureRecorderModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="TemperatureRecorderModel.Log" Role="Log" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Items">
+            <Principal Role="Item">
               <PropertyRef Name="ItemId" />
             </Principal>
-            <Dependent Role="Logs">
+            <Dependent Role="Log">
               <PropertyRef Name="ItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="TemperatureRecorderEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Hashes" EntityType="Self.Hash" />
-          <EntitySet Name="Items" EntityType="Self.Item" />
-          <EntitySet Name="Logs" EntityType="Self.Log" />
-          <AssociationSet Name="FK_Hashes_Logs" Association="Self.FK_Hashes_Logs">
-            <End Role="Logs" EntitySet="Logs" />
-            <End Role="Hashes" EntitySet="Hashes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Logs_ToItems" Association="Self.FK_Logs_ToItems">
-            <End Role="Items" EntitySet="Items" />
-            <End Role="Logs" EntitySet="Logs" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TemperatureRecorderModelStoreContainer" CdmEntityContainer="TemperatureRecorderEntities">
-          <EntitySetMapping Name="Hashes">
-            <EntityTypeMapping TypeName="TemperatureRecorderModel.Hash">
-              <MappingFragment StoreEntitySet="Hashes">
-                <ScalarProperty Name="HashId" ColumnName="HashId" />
-                <ScalarProperty Name="LogId" ColumnName="LogId" />
-                <ScalarProperty Name="HashValue" ColumnName="HashValue" />
-                <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="TemperatureRecorderModel.Item">
               <MappingFragment StoreEntitySet="Items">
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Logs">
             <EntityTypeMapping TypeName="TemperatureRecorderModel.Log">
               <MappingFragment StoreEntitySet="Logs">
-                <ScalarProperty Name="LogId" ColumnName="LogId" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-                <ScalarProperty Name="ItemValue" ColumnName="ItemValue" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="TimeStamp" ColumnName="TimeStamp" />
+                <ScalarProperty Name="HashValue" ColumnName="HashValue" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ItemValue" ColumnName="ItemValue" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

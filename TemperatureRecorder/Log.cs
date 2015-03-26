@@ -14,18 +14,13 @@ namespace TemperatureRecorder
     
     public partial class Log
     {
-        public Log()
-        {
-            this.Hashes = new HashSet<Hash>();
-        }
-    
         public int LogId { get; set; }
         public int ItemId { get; set; }
         public double ItemValue { get; set; }
         public System.DateTime Date { get; set; }
+        public string HashValue { get; set; }
         public byte[] TimeStamp { get; set; }
     
-        public virtual ICollection<Hash> Hashes { get; set; }
         public virtual Item Item { get; set; }
     }
 }

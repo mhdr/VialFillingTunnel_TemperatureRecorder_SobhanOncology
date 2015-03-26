@@ -25,7 +25,6 @@ namespace TemperatureRecorder
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Hash> Hashes { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
     }
