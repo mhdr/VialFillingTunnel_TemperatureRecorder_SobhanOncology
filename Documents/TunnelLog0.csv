@@ -1,0 +1,33 @@
+"VarName","TimeString","VarValue","Validity","Time_ms"
+"TemperatureCoolZone","3/29/2015 4:29:39 PM",193,1,42092687260.7639
+"TemperatureSterilisierZone","3/29/2015 4:29:39 PM",222,1,42092687260.7639
+"TemperaturePreHeatingZone","3/29/2015 4:29:39 PM",224,1,42092687260.7639
+"TemperatureCoolZone","3/29/2015 4:29:49 PM",193,1,42092687376.5278
+"TemperatureSterilisierZone","3/29/2015 4:29:49 PM",222,1,42092687376.5278
+"TemperaturePreHeatingZone","3/29/2015 4:29:49 PM",224,1,42092687376.5278
+"TemperatureCoolZone","3/29/2015 4:29:59 PM",193,1,42092687492.2801
+"TemperatureSterilisierZone","3/29/2015 4:29:59 PM",222,1,42092687492.2801
+"TemperaturePreHeatingZone","3/29/2015 4:29:59 PM",224,1,42092687492.2801
+"TemperatureCoolZone","3/29/2015 4:30:09 PM",193,1,42092687608.0556
+"TemperatureSterilisierZone","3/29/2015 4:30:09 PM",221,1,42092687608.0556
+"TemperaturePreHeatingZone","3/29/2015 4:30:09 PM",224,1,42092687608.0556
+"TemperatureCoolZone","3/29/2015 4:30:19 PM",194,1,42092687723.8079
+"TemperatureSterilisierZone","3/29/2015 4:30:19 PM",221,1,42092687723.8079
+"TemperaturePreHeatingZone","3/29/2015 4:30:19 PM",224,1,42092687723.8079
+"TemperatureCoolZone","3/29/2015 4:30:29 PM",194,1,42092687839.5602
+"TemperatureSterilisierZone","3/29/2015 4:30:29 PM",222,1,42092687839.5602
+"TemperaturePreHeatingZone","3/29/2015 4:30:29 PM",224,1,42092687839.5602
+"TemperatureCoolZone","3/29/2015 4:30:39 PM",194,1,42092687955.3125
+"TemperatureSterilisierZone","3/29/2015 4:30:39 PM",222,1,42092687955.3125
+"TemperaturePreHeatingZone","3/29/2015 4:30:39 PM",224,1,42092687955.3125
+"TemperatureCoolZone","3/29/2015 4:30:49 PM",194,1,42092688071.0764
+"TemperatureSterilisierZone","3/29/2015 4:30:49 PM",222,1,42092688071.0764
+"TemperaturePreHeatingZone","3/29/2015 4:30:49 PM",224,1,42092688071.0764
+"TemperatureCoolZone","3/29/2015 4:30:59 PM",195,1,42092688186.8287
+"TemperatureSterilisierZone","3/29/2015 4:30:59 PM",222,1,42092688186.8287
+"TemperaturePreHeatingZone","3/29/2015 4:30:59 PM",224,1,42092688186.8287
+"TemperatureCoolZone","3/29/2015 4:31:09 PM",195,1,42092688302.581
+"TemperatureSterilisierZone","3/29/2015 4:31:09 PM",222,1,42092688302.581
+"TemperaturePreHeatingZone","3/29/2015 4:31:09 PM",224,1,42092688302.581
+"$RT_OFF$","3/29/2015 4:31:14 PM",0,2,42092688354.8611
+"$RT_COUNT$",32,,,,
