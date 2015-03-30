@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Microsoft.Win32;
 using Telerik.Windows.Controls.Charting;
 using Telerik.Windows.Controls.ChartView;
@@ -37,6 +38,14 @@ namespace TemperatureRecorder
         {
             InitializeComponent();
         }
+
+        private List<TunnelLog> LastTunnelLogs=new List<TunnelLog>();
+
+        private DispatcherTimer Timer1=new DispatcherTimer(DispatcherPriority.Send);
+
+        private TunnelLogs Tunnel=new TunnelLogs();
+
+        private List<Item> Items=new List<Item>();
 
         TemperatureRecorderEntities Entities=new TemperatureRecorderEntities();
         List<Log> _logs=new List<Log>();
@@ -63,11 +72,62 @@ namespace TemperatureRecorder
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var items = Entities.Items.ToList();
+            Items = Entities.Items.ToList();
 
-            foreach (Item item in items)
+            foreach (Item item in Items)
             {
                 ComboBoxItemName.Items.Add(item.ItemName);
+            }
+
+            Timer1.Interval=new TimeSpan(0,0,0,5);
+            Timer1.IsEnabled = true;
+            Timer1.Tick += Timer1_Tick;
+        }
+
+        void Timer1_Tick(object sender, EventArgs e)
+        {
+            foreach (Item item in Items)
+            {
+                string itemName = item.ItemName;
+                int itemId = item.ItemId;
+
+                TunnelLog currentLog = null;
+                currentLog = Tunnel.GetValue(x => x.VarName == itemName);
+
+                if (currentLog != null)
+                {
+                    TunnelLog lastLog = LastTunnelLogs.FirstOrDefault(x => x.VarName == itemName);
+
+                    if (lastLog == null)
+                    {
+                        Log log=new Log();
+                        log.ItemId = itemId;
+                        log.ItemValue = currentLog.VarValue;
+                        log.Date = DateTime.Now;
+
+                        Entities.Logs.Add(log);
+                        Entities.SaveChanges();
+
+                        LastTunnelLogs.Add(currentLog);
+                    }
+                    else
+                    {
+                        if (lastLog.Time_ms != currentLog.Time_ms)
+                        {
+                            LastTunnelLogs.Remove(lastLog);
+
+                            Log log = new Log();
+                            log.ItemId = itemId;
+                            log.ItemValue = currentLog.VarValue;
+                            log.Date = DateTime.Now;
+
+                            Entities.Logs.Add(log);
+                            Entities.SaveChanges();
+
+                            LastTunnelLogs.Add(currentLog);
+                        }
+                    }
+                }
             }
         }
 
