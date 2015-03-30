@@ -1,0 +1,1 @@
+"C:\Program Files\SIEMENS\SIMATIC WinCC flexible\WinCC flexible 2008 Runtime\HmiRTm.exe" "C:\Program Files\SIEMENS\STEP7\s7proj\BSLogger\HmiEs\PROJECT_1\PROJECT_1.SIMATIC HMI-Station(1).fwx" /ShowLayout /Restart
