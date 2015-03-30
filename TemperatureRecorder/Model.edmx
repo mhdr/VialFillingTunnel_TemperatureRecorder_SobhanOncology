@@ -9,14 +9,14 @@
           <Key>
             <PropertyRef Name="ItemId" />
           </Key>
-          <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ItemName" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Logs">
           <Key>
             <PropertyRef Name="LogId" />
           </Key>
-          <Property Name="LogId" Type="int" Nullable="false" />
+          <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemId" Type="int" Nullable="false" />
           <Property Name="ItemValue" Type="float" Nullable="false" />
           <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />

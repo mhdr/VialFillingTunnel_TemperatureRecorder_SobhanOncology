@@ -17,9 +17,12 @@ using System.Windows.Threading;
 using Microsoft.Win32;
 using Telerik.Windows.Controls.Charting;
 using Telerik.Windows.Controls.ChartView;
+using Telerik.Windows.Controls.Legend;
+using Telerik.Windows.Data;
 using Telerik.Windows.Documents.FormatProviders.Pdf;
 using Telerik.Windows.Documents.Layout;
 using Telerik.Windows.Documents.Model;
+using LineSeries = Telerik.Windows.Controls.ChartView.LineSeries;
 using Paragraph = Telerik.Windows.Documents.Model.Paragraph;
 using Section = Telerik.Windows.Documents.Model.Section;
 using Span = Telerik.Windows.Documents.Model.Span;
@@ -38,6 +41,10 @@ namespace TemperatureRecorder
         {
             InitializeComponent();
         }
+
+        RadObservableCollection<Log> item1Live = new RadHierarchicalObservableCollection<Log>();
+        RadObservableCollection<Log> item2Live = new RadHierarchicalObservableCollection<Log>();
+        RadObservableCollection<Log> item3Live = new RadHierarchicalObservableCollection<Log>();
 
         private List<TunnelLog> LastTunnelLogs=new List<TunnelLog>();
 
@@ -82,6 +89,35 @@ namespace TemperatureRecorder
             Timer1.Interval=new TimeSpan(0,0,0,5);
             Timer1.IsEnabled = true;
             Timer1.Tick += Timer1_Tick;
+
+            LiveChart.Series.Add(new LineSeries());
+            LineSeries series1 = (LineSeries)this.LiveChart.Series[0];
+            series1.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
+            series1.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "ItemValue" };
+            series1.Stroke = Brushes.Blue;
+            series1.StrokeThickness = 2;
+
+            LiveChart.Series.Add(new LineSeries());
+            LineSeries series2 = (LineSeries)this.LiveChart.Series[1];
+            series2.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
+            series2.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "ItemValue" };
+            series2.Stroke = Brushes.LimeGreen;
+            series2.StrokeThickness = 2;
+
+            LiveChart.Series.Add(new LineSeries());
+            LineSeries series3 = (LineSeries)this.LiveChart.Series[2];
+            series3.CategoryBinding = new PropertyNameDataPointBinding() { PropertyName = "Date" };
+            series3.ValueBinding = new PropertyNameDataPointBinding() { PropertyName = "ItemValue" };
+            series3.Stroke = Brushes.OrangeRed;
+            series3.StrokeThickness = 2;
+
+            series1.ItemsSource = item1Live;
+            series2.ItemsSource = item2Live;
+            series3.ItemsSource = item3Live;
+
+            LiveChartLegend.Items.Add(new LegendItem(){MarkerFill = Brushes.Blue,Title = Items[0].ItemName});
+            LiveChartLegend.Items.Add(new LegendItem() { MarkerFill = Brushes.LimeGreen, Title = Items[1].ItemName });
+            LiveChartLegend.Items.Add(new LegendItem() { MarkerFill = Brushes.OrangeRed, Title = Items[2].ItemName });
         }
 
         void Timer1_Tick(object sender, EventArgs e)
@@ -109,6 +145,34 @@ namespace TemperatureRecorder
                         Entities.SaveChanges();
 
                         LastTunnelLogs.Add(currentLog);
+
+                        if (item.ItemId == 1)
+                        {
+                            if (item1Live.Count > 37)
+                            {
+                                item1Live.RemoveAt(0);
+                            }
+
+                            item1Live.Add(log);
+                        }
+                        else if (item.ItemId == 2)
+                        {
+                            if (item2Live.Count > 37)
+                            {
+                                item2Live.RemoveAt(0);
+                            }
+
+                            item2Live.Add(log);
+                        }
+                        else if (item.ItemId == 3)
+                        {
+                            if (item3Live.Count > 37)
+                            {
+                                item3Live.RemoveAt(0);
+                            }
+
+                            item3Live.Add(log);
+                        }
                     }
                     else
                     {
@@ -125,6 +189,34 @@ namespace TemperatureRecorder
                             Entities.SaveChanges();
 
                             LastTunnelLogs.Add(currentLog);
+
+                            if (item.ItemId == 1)
+                            {
+                                if (item1Live.Count > 37)
+                                {
+                                    item1Live.RemoveAt(0);
+                                }
+
+                                item1Live.Add(log);
+                            }
+                            else if (item.ItemId == 2)
+                            {
+                                if (item2Live.Count > 37)
+                                {
+                                    item2Live.RemoveAt(0);
+                                }
+
+                                item2Live.Add(log);
+                            }
+                            else if (item.ItemId == 3)
+                            {
+                                if (item3Live.Count > 37)
+                                {
+                                    item3Live.RemoveAt(0);
+                                }
+
+                                item3Live.Add(log);
+                            }
                         }
                     }
                 }
