@@ -18,6 +18,10 @@
                         <telerik:RadCartesianChart.VerticalAxis>
                             <telerik:LinearAxis LabelInterval="2"/>
                         </telerik:RadCartesianChart.VerticalAxis>
+
+                        <telerik:RadCartesianChart.Behaviors>
+                            <telerik:ChartPanAndZoomBehavior ZoomMode="Horizontal" PanMode="Horizontal"/>
+                        </telerik:RadCartesianChart.Behaviors>
                     </telerik:RadCartesianChart>
                     
                     <telerik:RadLegend Grid.Column="1" Grid.Row="0" Name="LiveChartLegend" Background="White"
