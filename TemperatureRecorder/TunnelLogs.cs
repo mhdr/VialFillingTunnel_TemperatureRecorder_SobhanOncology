@@ -82,9 +82,9 @@ namespace TemperatureRecorder
                 TunnelLog item = new TunnelLog();
                 item.VarName = row["VarName"] as string;
                 item.TimeString = row["TimeString"] as string;
-                item.VarValue = (float)row["VarValue"];
-                item.Validity = (int)row["Validity"];
-                item.Time_ms = (float)row["Time_ms"];
+                item.VarValue =Convert.ToDouble(row["VarValue"]) ;
+                item.Validity = Convert.ToInt32(row["Validity"]);
+                item.Time_ms = Convert.ToDouble(row["Time_ms"]);
 
                 if (predicate(item))
                 {

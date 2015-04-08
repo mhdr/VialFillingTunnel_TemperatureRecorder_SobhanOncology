@@ -148,7 +148,7 @@ namespace TemperatureRecorder
 
                         if (item.ItemId == 1)
                         {
-                            if (item1Live.Count > 37)
+                            if (item1Live.Count > 361)
                             {
                                 item1Live.RemoveAt(0);
                             }
@@ -157,7 +157,7 @@ namespace TemperatureRecorder
                         }
                         else if (item.ItemId == 2)
                         {
-                            if (item2Live.Count > 37)
+                            if (item2Live.Count > 361)
                             {
                                 item2Live.RemoveAt(0);
                             }
@@ -166,7 +166,7 @@ namespace TemperatureRecorder
                         }
                         else if (item.ItemId == 3)
                         {
-                            if (item3Live.Count > 37)
+                            if (item3Live.Count > 361)
                             {
                                 item3Live.RemoveAt(0);
                             }
@@ -192,7 +192,7 @@ namespace TemperatureRecorder
 
                             if (item.ItemId == 1)
                             {
-                                if (item1Live.Count > 37)
+                                if (item1Live.Count > 361)
                                 {
                                     item1Live.RemoveAt(0);
                                 }
@@ -201,7 +201,7 @@ namespace TemperatureRecorder
                             }
                             else if (item.ItemId == 2)
                             {
-                                if (item2Live.Count > 37)
+                                if (item2Live.Count > 361)
                                 {
                                     item2Live.RemoveAt(0);
                                 }
@@ -210,7 +210,7 @@ namespace TemperatureRecorder
                             }
                             else if (item.ItemId == 3)
                             {
-                                if (item3Live.Count > 37)
+                                if (item3Live.Count > 361)
                                 {
                                     item3Live.RemoveAt(0);
                                 }

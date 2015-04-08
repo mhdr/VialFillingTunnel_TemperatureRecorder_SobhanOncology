@@ -10,8 +10,8 @@ namespace TemperatureRecorder
     {
         public string VarName { get; set; }
         public string TimeString { get; set; }
-        public float VarValue { get; set; }
+        public double VarValue { get; set; }
         public int Validity { get; set; }
-        public float Time_ms { get; set; }
+        public double Time_ms { get; set; }
     }
 }
