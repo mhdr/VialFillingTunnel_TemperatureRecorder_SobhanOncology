@@ -133,6 +133,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataSetLog.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSetLog.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Statics.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="TunnelLog.cs" />
@@ -201,6 +206,17 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="DataSetLog.xsc">
+      <DependentUpon>DataSetLog.xsd</DependentUpon>
+    </None>
+    <None Include="DataSetLog.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSetLog.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSetLog.xss">
+      <DependentUpon>DataSetLog.xsd</DependentUpon>
+    </None>
     <None Include="Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>

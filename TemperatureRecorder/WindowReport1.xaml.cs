@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,27 +21,48 @@ namespace TemperatureRecorder
     /// </summary>
     public partial class WindowReport1 : Window
     {
+        private DataSetLog.LogExportRow _logExportRow;
         public WindowReport1()
         {
             InitializeComponent();
             ReportViewer1.Load+=ReportViewer1OnLoad;
         }
 
+        public DataSetLog.LogExportRow LogExportRow
+        {
+            get { return _logExportRow; }
+            set { _logExportRow = value; }
+        }
+
         private void ReportViewer1OnLoad(object sender, EventArgs eventArgs)
         {
-            //DataSet1 ds = new DataSet1();
+            var ds=new DataSetLog();
+            var reportDataSource = new ReportDataSource();
 
-            //ReportDataSource reportDataSource=new ReportDataSource();
-            
-            //ds.BeginInit();
-            //reportDataSource.Name = "DataSet1";
-            //reportDataSource.Value = ds.Person;
-            //ReportViewer1.LocalReport.DataSources.Add(reportDataSource);
-            //ReportViewer1.LocalReport.ReportEmbeddedResource = "WpfApplication1.Report1.rdlc";
-            //ds.EndInit();
+            ds.BeginInit();
+            reportDataSource.Name = "DataSetLog";
+            reportDataSource.Value = ds.LogExport;
+            ReportViewer1.LocalReport.DataSources.Add(reportDataSource);
+            ReportViewer1.LocalReport.ReportEmbeddedResource = "TemperatureRecorder.Report1.rdlc";
+            ReportViewer1.LocalReport.EnableExternalImages = true;
+            ds.EndInit();
 
-            //ds.Person.AddPersonRow("Mahmood", "Ramzani", 29);
-            //ReportViewer1.RefreshReport();
+            ds.LogExport.AddLogExportRow(this.LogExportRow);
+
+            var pageSettings = new PageSettings();
+            pageSettings.Margins.Top = 0;
+            pageSettings.Margins.Bottom = 0;
+            pageSettings.Margins.Left = 0;
+            pageSettings.Margins.Right = 0;
+
+            var pageSize = new PaperSize();
+            pageSize.RawKind = (int)PaperKind.A4;
+            pageSettings.PaperSize = pageSize;
+
+            pageSettings.Landscape = true;
+
+            ReportViewer1.SetPageSettings(pageSettings);
+            ReportViewer1.RefreshReport();
         }
     }
 }
