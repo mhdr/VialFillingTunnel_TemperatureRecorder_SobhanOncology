@@ -12,22 +12,22 @@ namespace GenerateData
         {
             TemperatureRecorderEntities entities=new TemperatureRecorderEntities();
 
-            Item item1=new Item();
-            item1.ItemId = 1;
-            item1.ItemName = "Temperature 1";
+            //Item item1=new Item();
+            //item1.ItemId = 1;
+            //item1.ItemName = "Temperature 1";
 
-            Item item2 = new Item();
-            item2.ItemId = 2;
-            item2.ItemName = "Temperature 2";
+            //Item item2 = new Item();
+            //item2.ItemId = 2;
+            //item2.ItemName = "Temperature 2";
 
-            Item item3 = new Item();
-            item3.ItemId = 3;
-            item3.ItemName = "Temperature 3";
+            //Item item3 = new Item();
+            //item3.ItemId = 3;
+            //item3.ItemName = "Temperature 3";
 
-            entities.Items.Add(item1);
-            entities.Items.Add(item2);
-            entities.Items.Add(item3);
-            entities.SaveChanges();
+            //entities.Items.Add(item1);
+            //entities.Items.Add(item2);
+            //entities.Items.Add(item3);
+            //entities.SaveChanges();
 
             DateTime date = DateTime.Now - new TimeSpan(0, 1, 0, 0);
 
