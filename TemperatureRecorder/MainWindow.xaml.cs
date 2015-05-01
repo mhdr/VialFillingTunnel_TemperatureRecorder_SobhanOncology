@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -144,6 +145,17 @@ namespace TemperatureRecorder
                         Entities.Logs.Add(log);
                         Entities.SaveChanges();
 
+                        var beforeHash = new StringBuilder();
+                        beforeHash.Append(log.LogId);
+                        beforeHash.Append(log.ItemId);
+                        beforeHash.Append(log.ItemValue);
+                        beforeHash.Append(log.Date);
+
+                        var afterHash = ComputeHash(beforeHash.ToString());
+                        log.HashValue = afterHash;
+
+                        Entities.SaveChanges();
+
                         LastTunnelLogs.Add(currentLog);
 
                         if (item.ItemId == 1)
@@ -188,6 +200,17 @@ namespace TemperatureRecorder
                             Entities.Logs.Add(log);
                             Entities.SaveChanges();
 
+                            var beforeHash = new StringBuilder();
+                            beforeHash.Append(log.LogId);
+                            beforeHash.Append(log.ItemId);
+                            beforeHash.Append(log.ItemValue);
+                            beforeHash.Append(log.Date);
+
+                            var afterHash = ComputeHash(beforeHash.ToString());
+                            log.HashValue = afterHash;
+
+                            Entities.SaveChanges();
+
                             LastTunnelLogs.Add(currentLog);
 
                             if (item.ItemId == 1)
@@ -221,6 +244,18 @@ namespace TemperatureRecorder
                     }
                 }
             }
+        }
+
+        private string ComputeHash(string value)
+        {
+            var valueB = Encoding.UTF8.GetBytes(value);
+
+            var hash = new SHA256Managed();
+            var resultB = hash.ComputeHash(valueB);
+
+            var result = Encoding.UTF8.GetString(resultB);
+
+            return result;
         }
 
         private void ButtonShow_OnClick(object sender, RoutedEventArgs e)

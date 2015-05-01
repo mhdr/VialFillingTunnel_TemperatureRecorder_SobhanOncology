@@ -1,0 +1,11 @@
+﻿<Window x:Class="TemperatureRecorder.WindowReport1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms" 
+        Title="Report 1" Height="600" Width="600" WindowState="Maximized">
+    <Grid>
+        <WindowsFormsHost>
+            <rv:ReportViewer x:Name="ReportViewer1"/>
+        </WindowsFormsHost>
+    </Grid>
+</Window>
