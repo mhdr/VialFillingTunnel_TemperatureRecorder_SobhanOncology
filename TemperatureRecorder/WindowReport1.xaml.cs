@@ -21,17 +21,17 @@ namespace TemperatureRecorder
     /// </summary>
     public partial class WindowReport1 : Window
     {
-        private DataSetLog.LogExportRow _logExportRow;
+        private LogExport _logExport;
         public WindowReport1()
         {
             InitializeComponent();
             ReportViewer1.Load+=ReportViewer1OnLoad;
         }
 
-        public DataSetLog.LogExportRow LogExportRow
+        public LogExport Export
         {
-            get { return _logExportRow; }
-            set { _logExportRow = value; }
+            get { return _logExport; }
+            set { _logExport = value; }
         }
 
         private void ReportViewer1OnLoad(object sender, EventArgs eventArgs)
@@ -47,7 +47,8 @@ namespace TemperatureRecorder
             ReportViewer1.LocalReport.EnableExternalImages = true;
             ds.EndInit();
 
-            ds.LogExport.AddLogExportRow(this.LogExportRow);
+            ds.LogExport.Clear();
+            ds.LogExport.AddLogExportRow(Export.ItemName,Export.StartDate,Export.EndDate,Export.Graph,Export.HashValue);
 
             var pageSettings = new PageSettings();
             pageSettings.Margins.Top = 0;

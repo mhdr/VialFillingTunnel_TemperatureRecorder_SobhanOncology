@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -47,16 +48,16 @@ namespace TemperatureRecorder
         RadObservableCollection<Log> item2Live = new RadHierarchicalObservableCollection<Log>();
         RadObservableCollection<Log> item3Live = new RadHierarchicalObservableCollection<Log>();
 
-        private List<TunnelLog> LastTunnelLogs=new List<TunnelLog>();
+        private List<TunnelLog> LastTunnelLogs = new List<TunnelLog>();
 
-        private DispatcherTimer Timer1=new DispatcherTimer(DispatcherPriority.Send);
+        private DispatcherTimer Timer1 = new DispatcherTimer(DispatcherPriority.Send);
 
-        private TunnelLogs Tunnel=new TunnelLogs();
+        private TunnelLogs Tunnel = new TunnelLogs();
 
-        private List<Item> Items=new List<Item>();
+        private List<Item> Items = new List<Item>();
 
-        TemperatureRecorderEntities Entities=new TemperatureRecorderEntities();
-        List<Log> _logs=new List<Log>();
+        TemperatureRecorderEntities Entities = new TemperatureRecorderEntities();
+        List<Log> _logs = new List<Log>();
         private DateTime? _fromDate;
         private DateTime? _toDate;
 
@@ -87,7 +88,7 @@ namespace TemperatureRecorder
                 ComboBoxItemName.Items.Add(item.ItemName);
             }
 
-            Timer1.Interval=new TimeSpan(0,0,0,5);
+            Timer1.Interval = new TimeSpan(0, 0, 0, 5);
             Timer1.IsEnabled = true;
             Timer1.Tick += Timer1_Tick;
 
@@ -116,7 +117,7 @@ namespace TemperatureRecorder
             series2.ItemsSource = item2Live;
             series3.ItemsSource = item3Live;
 
-            LiveChartLegend.Items.Add(new LegendItem(){MarkerFill = Brushes.Blue,Title = Items[0].ItemName});
+            LiveChartLegend.Items.Add(new LegendItem() { MarkerFill = Brushes.Blue, Title = Items[0].ItemName });
             LiveChartLegend.Items.Add(new LegendItem() { MarkerFill = Brushes.LimeGreen, Title = Items[1].ItemName });
             LiveChartLegend.Items.Add(new LegendItem() { MarkerFill = Brushes.OrangeRed, Title = Items[2].ItemName });
         }
@@ -137,7 +138,7 @@ namespace TemperatureRecorder
 
                     if (lastLog == null)
                     {
-                        Log log=new Log();
+                        Log log = new Log();
                         log.ItemId = itemId;
                         log.ItemValue = currentLog.VarValue;
                         log.Date = DateTime.Now;
@@ -267,7 +268,7 @@ namespace TemperatureRecorder
                 MessageBox.Show("Item Name should be selected.");
                 return;
             }
-            
+
             Item selectedItem = Entities.Items.FirstOrDefault(x => x.ItemName == itemName);
 
             FromDate = DateTimePickerFrom.SelectedValue;
@@ -308,6 +309,52 @@ namespace TemperatureRecorder
             {
                 Chart.ExportToImage(dialog.FileName);
             }
+        }
+
+        private void ButtonPrint_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (Logs.Count == 0)
+            {
+                MessageBox.Show("No Data.");
+                return;
+            }
+
+            BusyIndicator.IsBusy = true;
+
+            var myPicturePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            var fileName = string.Format("{0}.jpg", Guid.NewGuid().ToString());
+            var filePath = System.IO.Path.Combine(myPicturePath, fileName);
+
+            Chart.ExportToImage(filePath);
+
+            string itemName = Logs[0].Item.ItemName;
+
+            var concatedHash = "";
+
+            foreach (Log log in Logs)
+            {
+                concatedHash += log.HashValue;
+            }
+
+            var hashValueForAllData = ComputeHash(concatedHash);
+
+            var export = new LogExport()
+            {
+                ItemName = itemName,
+                StartDate = FromDate.ToString(),
+                EndDate = ToDate.ToString(),
+                Graph = filePath,
+                HashValue = hashValueForAllData
+            };
+
+            WindowReport1 windowReport1=new WindowReport1();
+            windowReport1.Export = export;
+            windowReport1.ShowDialog();
+
+            // clean junk
+            File.Delete(filePath);
+
+            BusyIndicator.IsBusy = false;
         }
     }
 }

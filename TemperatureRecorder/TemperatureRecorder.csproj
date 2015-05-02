@@ -133,11 +133,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataSetLog.cs">
+      <DependentUpon>DataSetLog.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DataSetLog.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSetLog.xsd</DependentUpon>
     </Compile>
+    <Compile Include="LogExport.cs" />
     <Compile Include="Statics.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="TunnelLog.cs" />
