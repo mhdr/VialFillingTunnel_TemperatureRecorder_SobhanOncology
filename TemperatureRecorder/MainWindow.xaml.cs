@@ -254,7 +254,10 @@ namespace TemperatureRecorder
             var hash = new SHA256Managed();
             var resultB = hash.ComputeHash(valueB);
 
-            var result = Encoding.UTF8.GetString(resultB);
+            //var result = BitConverter.ToString(resultB);
+            //result = result.Replace("-", "");
+
+            var result = Convert.ToBase64String(resultB);
 
             return result;
         }

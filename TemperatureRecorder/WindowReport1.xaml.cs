@@ -43,7 +43,7 @@ namespace TemperatureRecorder
             reportDataSource.Name = "DataSetLog";
             reportDataSource.Value = ds.LogExport;
             ReportViewer1.LocalReport.DataSources.Add(reportDataSource);
-            ReportViewer1.LocalReport.ReportEmbeddedResource = "TemperatureRecorder.Report1.rdlc";
+            ReportViewer1.LocalReport.ReportEmbeddedResource = "TemperatureRecorder.Report2.rdlc";
             ReportViewer1.LocalReport.EnableExternalImages = true;
             ds.EndInit();
 
