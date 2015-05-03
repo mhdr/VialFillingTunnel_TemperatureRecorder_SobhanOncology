@@ -48,7 +48,7 @@ namespace TemperatureRecorder
             ds.EndInit();
 
             ds.LogExport.Clear();
-            ds.LogExport.AddLogExportRow(Export.ItemName,Export.StartDate,Export.EndDate,Export.Graph,Export.HashValue);
+            ds.LogExport.AddLogExportRow(Export.ItemName,Export.StartDate,Export.EndDate,Export.Graph,Export.HashValue,Export.Min,Export.Max);
 
             var pageSettings = new PageSettings();
             pageSettings.Margins.Top = 0;

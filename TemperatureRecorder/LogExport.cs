@@ -13,5 +13,7 @@ namespace TemperatureRecorder
         public string EndDate { get; set; }
         public string Graph { get; set; }
         public string HashValue { get; set; }
+        public string Min { get; set; }
+        public string Max { get; set; }
     }
 }

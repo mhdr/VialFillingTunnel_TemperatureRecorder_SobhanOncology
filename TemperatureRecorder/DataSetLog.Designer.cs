@@ -289,6 +289,10 @@ namespace TemperatureRecorder {
             
             private global::System.Data.DataColumn columnHashValue;
             
+            private global::System.Data.DataColumn columnMin;
+            
+            private global::System.Data.DataColumn columnMax;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public LogExportDataTable() {
@@ -364,6 +368,22 @@ namespace TemperatureRecorder {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MinColumn {
+                get {
+                    return this.columnMin;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MaxColumn {
+                get {
+                    return this.columnMax;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -399,14 +419,16 @@ namespace TemperatureRecorder {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public LogExportRow AddLogExportRow(string ItemName, string StartDate, string EndDate, string Graph, string HashValue) {
+            public LogExportRow AddLogExportRow(string ItemName, string StartDate, string EndDate, string Graph, string HashValue, string Min, string Max) {
                 LogExportRow rowLogExportRow = ((LogExportRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ItemName,
                         StartDate,
                         EndDate,
                         Graph,
-                        HashValue};
+                        HashValue,
+                        Min,
+                        Max};
                 rowLogExportRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowLogExportRow);
                 return rowLogExportRow;
@@ -434,6 +456,8 @@ namespace TemperatureRecorder {
                 this.columnEndDate = base.Columns["EndDate"];
                 this.columnGraph = base.Columns["Graph"];
                 this.columnHashValue = base.Columns["HashValue"];
+                this.columnMin = base.Columns["Min"];
+                this.columnMax = base.Columns["Max"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -449,6 +473,10 @@ namespace TemperatureRecorder {
                 base.Columns.Add(this.columnGraph);
                 this.columnHashValue = new global::System.Data.DataColumn("HashValue", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHashValue);
+                this.columnMin = new global::System.Data.DataColumn("Min", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMin);
+                this.columnMax = new global::System.Data.DataColumn("Max", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMax);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -671,6 +699,38 @@ namespace TemperatureRecorder {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Min {
+                get {
+                    try {
+                        return ((string)(this[this.tableLogExport.MinColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Min\' in table \'LogExport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableLogExport.MinColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Max {
+                get {
+                    try {
+                        return ((string)(this[this.tableLogExport.MaxColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Max\' in table \'LogExport\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableLogExport.MaxColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsItemNameNull() {
                 return this.IsNull(this.tableLogExport.ItemNameColumn);
             }
@@ -727,6 +787,30 @@ namespace TemperatureRecorder {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetHashValueNull() {
                 this[this.tableLogExport.HashValueColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMinNull() {
+                return this.IsNull(this.tableLogExport.MinColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMinNull() {
+                this[this.tableLogExport.MinColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMaxNull() {
+                return this.IsNull(this.tableLogExport.MaxColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMaxNull() {
+                this[this.tableLogExport.MaxColumn] = global::System.Convert.DBNull;
             }
         }
         

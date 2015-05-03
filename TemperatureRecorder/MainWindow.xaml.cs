@@ -333,10 +333,22 @@ namespace TemperatureRecorder
             string itemName = Logs[0].Item.ItemName;
 
             var concatedHash = "";
+            double min = Logs[0].ItemValue;
+            double max = Logs[0].ItemValue;
 
             foreach (Log log in Logs)
             {
                 concatedHash += log.HashValue;
+
+                if (log.ItemValue < min)
+                {
+                    min = log.ItemValue;
+                }
+
+                if (log.ItemValue > max)
+                {
+                    max = log.ItemValue;
+                }
             }
 
             var hashValueForAllData = ComputeHash(concatedHash);
@@ -347,10 +359,12 @@ namespace TemperatureRecorder
                 StartDate = FromDate.ToString(),
                 EndDate = ToDate.ToString(),
                 Graph = string.Format("File://{0}", filePath),
-                HashValue = hashValueForAllData
+                HashValue = hashValueForAllData,
+                Min = min.ToString(),
+                Max = max.ToString()
             };
 
-            WindowReport1 windowReport1=new WindowReport1();
+            WindowReport1 windowReport1 = new WindowReport1();
             windowReport1.Export = export;
             windowReport1.ShowDialog();
 
