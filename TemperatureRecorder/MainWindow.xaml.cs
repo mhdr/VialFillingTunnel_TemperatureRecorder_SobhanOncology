@@ -343,7 +343,7 @@ namespace TemperatureRecorder
                 ItemName = itemName,
                 StartDate = FromDate.ToString(),
                 EndDate = ToDate.ToString(),
-                Graph = filePath,
+                Graph = string.Format("File://{0}", filePath),
                 HashValue = hashValueForAllData
             };
 
