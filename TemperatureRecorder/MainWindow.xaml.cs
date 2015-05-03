@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -60,6 +61,9 @@ namespace TemperatureRecorder
         List<Log> _logs = new List<Log>();
         private DateTime? _fromDate;
         private DateTime? _toDate;
+        private string _concatedHash;
+        private double _min;
+        private double _max;
 
         public DateTime? FromDate
         {
@@ -77,6 +81,24 @@ namespace TemperatureRecorder
         {
             get { return _logs; }
             set { _logs = value; }
+        }
+
+        public string ConcatedHash
+        {
+            get { return _concatedHash; }
+            set { _concatedHash = value; }
+        }
+
+        public double Min
+        {
+            get { return _min; }
+            set { _min = value; }
+        }
+
+        public double Max
+        {
+            get { return _max; }
+            set { _max = value; }
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
@@ -290,11 +312,63 @@ namespace TemperatureRecorder
                 return;
             }
 
+            BusyIndicatorChartArchive.IsBusy = true;
 
-            Logs = Entities.Logs.Where(x => x.ItemId == selectedItem.ItemId & x.Date >= FromDate & x.Date <= ToDate).ToList();
+            ButtonShow.IsEnabled = false;
+            ButtonExport.IsEnabled = false;
+            ButtonPrint.IsEnabled = false;
 
-            Chart.DefaultView.ChartTitle.Content = string.Format("{0} - From : {1} - To : {2}", itemName, FromDate, ToDate);
+            Thread thread=new Thread(()=>ProcessDataToShowChartArchive(selectedItem));
+            thread.Priority=ThreadPriority.AboveNormal;
+            thread.Start();
+        }
+
+        private void ProcessDataToShowChartArchive(Item item)
+        {
+            Logs = Entities.Logs.Where(x => x.ItemId == item.ItemId & x.Date >= FromDate & x.Date <= ToDate).ToList();
+
+            if (Logs != null)
+            {
+                if (Logs.Count > 0)
+                {
+                    ConcatedHash = "";
+                    Min = Logs[0].ItemValue;
+                    Max = Logs[0].ItemValue;
+
+                    foreach (Log log in Logs)
+                    {
+                        ConcatedHash += log.HashValue;
+
+                        if (log.ItemValue < Min)
+                        {
+                            Min = log.ItemValue;
+                        }
+
+                        if (log.ItemValue > Max)
+                        {
+                            Max = log.ItemValue;
+                        }
+                    }
+
+                    Dispatcher.BeginInvoke(new Action(() => ProcessDataToShowChartArchive_Completed(item)));
+                }
+            }
+        }
+
+        private void ProcessDataToShowChartArchive_Completed(Item item)
+        {
+            Chart.DefaultView.ChartTitle.Content = string.Format("{0} - From : {1} - To : {2}", item.ItemName, FromDate, ToDate);
             Chart.ItemsSource = Logs;
+
+            TextBlockMin.Text = Min.ToString();
+            TextBlockMax.Text = Max.ToString();
+            TextBlockHash.Text = ConcatedHash.ToString();
+
+            ButtonShow.IsEnabled = true;
+            ButtonExport.IsEnabled = true;
+            ButtonPrint.IsEnabled = true;
+
+            BusyIndicatorChartArchive.IsBusy = false;
         }
 
         private void ButtonExport_OnClick(object sender, RoutedEventArgs e)
@@ -322,8 +396,6 @@ namespace TemperatureRecorder
                 return;
             }
 
-            BusyIndicator.IsBusy = true;
-
             var myPicturePath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             var fileName = string.Format("{0}.jpg", Guid.NewGuid().ToString());
             var filePath = System.IO.Path.Combine(myPicturePath, fileName);
@@ -332,26 +404,7 @@ namespace TemperatureRecorder
 
             string itemName = Logs[0].Item.ItemName;
 
-            var concatedHash = "";
-            double min = Logs[0].ItemValue;
-            double max = Logs[0].ItemValue;
-
-            foreach (Log log in Logs)
-            {
-                concatedHash += log.HashValue;
-
-                if (log.ItemValue < min)
-                {
-                    min = log.ItemValue;
-                }
-
-                if (log.ItemValue > max)
-                {
-                    max = log.ItemValue;
-                }
-            }
-
-            var hashValueForAllData = ComputeHash(concatedHash);
+            var hashValueForAllData = ComputeHash(ConcatedHash);
 
             var export = new LogExport()
             {
@@ -360,8 +413,8 @@ namespace TemperatureRecorder
                 EndDate = ToDate.ToString(),
                 Graph = string.Format("File://{0}", filePath),
                 HashValue = hashValueForAllData,
-                Min = min.ToString(),
-                Max = max.ToString()
+                Min = Min.ToString(),
+                Max = Max.ToString()
             };
 
             WindowReport1 windowReport1 = new WindowReport1();
@@ -370,8 +423,6 @@ namespace TemperatureRecorder
 
             // clean junk
             File.Delete(filePath);
-
-            BusyIndicator.IsBusy = false;
         }
     }
 }
