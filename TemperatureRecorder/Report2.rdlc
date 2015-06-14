@@ -326,7 +326,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Signature 1</Value>
+                    <Value>Production Delegate Signature</Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -339,7 +339,7 @@
             <Top>1.48958in</Top>
             <Left>0.07292in</Left>
             <Height>0.25in</Height>
-            <Width>1in</Width>
+            <Width>2.17708in</Width>
             <ZIndex>13</ZIndex>
             <Style>
               <Border>
@@ -446,7 +446,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Signature 2</Value>
+                    <Value>QA Delegate Signature</Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -459,7 +459,7 @@
             <Top>1.48958in</Top>
             <Left>5.17708in</Left>
             <Height>0.25in</Height>
-            <Width>1in</Width>
+            <Width>1.59028in</Width>
             <ZIndex>18</ZIndex>
             <Style>
               <Border>

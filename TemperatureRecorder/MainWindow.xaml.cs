@@ -162,7 +162,15 @@ namespace TemperatureRecorder
                     {
                         Log log = new Log();
                         log.ItemId = itemId;
-                        log.ItemValue = currentLog.VarValue;
+                        if (itemId == 2)
+                        {
+                            log.ItemValue = currentLog.VarValue/10;
+                        }
+                        else
+                        {
+                            log.ItemValue = currentLog.VarValue;    
+                        }
+                        
                         log.Date = DateTime.Now;
 
                         Entities.Logs.Add(log);
@@ -217,7 +225,15 @@ namespace TemperatureRecorder
 
                             Log log = new Log();
                             log.ItemId = itemId;
-                            log.ItemValue = currentLog.VarValue;
+                            if (itemId == 2)
+                            {
+                                log.ItemValue = currentLog.VarValue / 10;
+                            }
+                            else
+                            {
+                                log.ItemValue = currentLog.VarValue;
+                            }
+                            //log.ItemValue = currentLog.VarValue;
                             log.Date = DateTime.Now;
 
                             Entities.Logs.Add(log);
@@ -272,12 +288,9 @@ namespace TemperatureRecorder
         private string ComputeHash(string value)
         {
             var valueB = Encoding.UTF8.GetBytes(value);
-
             var hash = new SHA256Managed();
+            //var hash = MD5.Create();
             var resultB = hash.ComputeHash(valueB);
-
-            //var result = BitConverter.ToString(resultB);
-            //result = result.Replace("-", "");
 
             var result = Convert.ToBase64String(resultB);
 
@@ -312,20 +325,17 @@ namespace TemperatureRecorder
                 return;
             }
 
-            BusyIndicatorChartArchive.IsBusy = true;
+            if (FromDate==ToDate)
+            {
+                MessageBox.Show("To date could not be the same as From date.");
+                return;
+            }
 
             ButtonShow.IsEnabled = false;
             ButtonExport.IsEnabled = false;
             ButtonPrint.IsEnabled = false;
 
-            Thread thread=new Thread(()=>ProcessDataToShowChartArchive(selectedItem));
-            thread.Priority=ThreadPriority.AboveNormal;
-            thread.Start();
-        }
-
-        private void ProcessDataToShowChartArchive(Item item)
-        {
-            Logs = Entities.Logs.Where(x => x.ItemId == item.ItemId & x.Date >= FromDate & x.Date <= ToDate).ToList();
+            Logs = Entities.Logs.Where(x => x.ItemId == selectedItem.ItemId & x.Date >= FromDate & x.Date <= ToDate).ToList();
 
             if (Logs != null)
             {
@@ -350,25 +360,21 @@ namespace TemperatureRecorder
                         }
                     }
 
-                    Dispatcher.BeginInvoke(new Action(() => ProcessDataToShowChartArchive_Completed(item)));
+                    ConcatedHash = ComputeHash(ConcatedHash);
+
+
+                    Chart.DefaultView.ChartTitle.Content = string.Format("{0} - From : {1} - To : {2}", itemName, FromDate, ToDate);
+                    Chart.ItemsSource = Logs;
+
+                    TextBlockMin.Text = Min.ToString();
+                    TextBlockMax.Text = Max.ToString();
+                    TextBlockHash.Text = ConcatedHash.ToString();
+
+                    ButtonShow.IsEnabled = true;
+                    ButtonExport.IsEnabled = true;
+                    ButtonPrint.IsEnabled = true;
                 }
             }
-        }
-
-        private void ProcessDataToShowChartArchive_Completed(Item item)
-        {
-            Chart.DefaultView.ChartTitle.Content = string.Format("{0} - From : {1} - To : {2}", item.ItemName, FromDate, ToDate);
-            Chart.ItemsSource = Logs;
-
-            TextBlockMin.Text = Min.ToString();
-            TextBlockMax.Text = Max.ToString();
-            TextBlockHash.Text = ConcatedHash.ToString();
-
-            ButtonShow.IsEnabled = true;
-            ButtonExport.IsEnabled = true;
-            ButtonPrint.IsEnabled = true;
-
-            BusyIndicatorChartArchive.IsBusy = false;
         }
 
         private void ButtonExport_OnClick(object sender, RoutedEventArgs e)
@@ -404,15 +410,13 @@ namespace TemperatureRecorder
 
             string itemName = Logs[0].Item.ItemName;
 
-            var hashValueForAllData = ComputeHash(ConcatedHash);
-
             var export = new LogExport()
             {
                 ItemName = itemName,
                 StartDate = FromDate.ToString(),
                 EndDate = ToDate.ToString(),
                 Graph = string.Format("File://{0}", filePath),
-                HashValue = hashValueForAllData,
+                HashValue = ConcatedHash,
                 Min = Min.ToString(),
                 Max = Max.ToString()
             };

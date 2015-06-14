@@ -43,41 +43,39 @@
                         <RowDefinition Height="0.1*"/>
                     </Grid.RowDefinitions>
 
-                    <telerik:RadBusyIndicator Grid.Row="0" Grid.Column="0" Name="BusyIndicatorChartArchive">
-                        <telerik:RadChart Name="Chart" >
-                            <telerik:RadChart.SeriesMappings>
-                                <telerik:SeriesMapping LegendLabel="Product Sales">
-                                    <telerik:SeriesMapping.SeriesDefinition>
-                                        <telerik:LineSeriesDefinition ShowPointMarks="False" ShowItemToolTips="True" ShowItemLabels="False"/>
-                                    </telerik:SeriesMapping.SeriesDefinition>
-                                    <telerik:SeriesMapping.ItemMappings>
-                                        <telerik:ItemMapping DataPointMember="XValue" FieldName="Date"></telerik:ItemMapping>
-                                        <telerik:ItemMapping DataPointMember="YValue" FieldName="ItemValue"></telerik:ItemMapping>
-                                    </telerik:SeriesMapping.ItemMappings>
-                                </telerik:SeriesMapping>
-                            </telerik:RadChart.SeriesMappings>
+                    <telerik:RadChart Name="Chart" Grid.Row="0" Grid.Column="0" >
+                        <telerik:RadChart.SeriesMappings>
+                            <telerik:SeriesMapping LegendLabel="Product Sales">
+                                <telerik:SeriesMapping.SeriesDefinition>
+                                    <telerik:LineSeriesDefinition ShowPointMarks="False" ShowItemToolTips="True" ShowItemLabels="False"/>
+                                </telerik:SeriesMapping.SeriesDefinition>
+                                <telerik:SeriesMapping.ItemMappings>
+                                    <telerik:ItemMapping DataPointMember="XValue" FieldName="Date"></telerik:ItemMapping>
+                                    <telerik:ItemMapping DataPointMember="YValue" FieldName="ItemValue"></telerik:ItemMapping>
+                                </telerik:SeriesMapping.ItemMappings>
+                            </telerik:SeriesMapping>
+                        </telerik:RadChart.SeriesMappings>
 
-                            <telerik:RadChart.DefaultView>
-                                <telerik:ChartDefaultView>
-                                    <telerik:ChartDefaultView.ChartTitle>
-                                        <telerik:ChartTitle Content="Tunnel Temperature" HorizontalAlignment="Stretch"/>
-                                    </telerik:ChartDefaultView.ChartTitle>
+                        <telerik:RadChart.DefaultView>
+                            <telerik:ChartDefaultView>
+                                <telerik:ChartDefaultView.ChartTitle>
+                                    <telerik:ChartTitle Content="Tunnel Temperature" HorizontalAlignment="Stretch"/>
+                                </telerik:ChartDefaultView.ChartTitle>
 
-                                    <telerik:ChartDefaultView.ChartArea>
-                                        <telerik:ChartArea>
-                                            <telerik:ChartArea.AxisX>
-                                                <telerik:AxisX DefaultLabelFormat="HH:mm" LabelStep="1" LayoutMode="Auto"/>
-                                            </telerik:ChartArea.AxisX>
-                                        </telerik:ChartArea>
-                                    </telerik:ChartDefaultView.ChartArea>
+                                <telerik:ChartDefaultView.ChartArea>
+                                    <telerik:ChartArea>
+                                        <telerik:ChartArea.AxisX>
+                                            <telerik:AxisX DefaultLabelFormat="HH:mm" LabelStep="1" LayoutMode="Auto"/>
+                                        </telerik:ChartArea.AxisX>
+                                    </telerik:ChartArea>
+                                </telerik:ChartDefaultView.ChartArea>
 
-                                    <telerik:ChartDefaultView.ChartLegend>
-                                        <telerik:ChartLegend Visibility="Collapsed" />
-                                    </telerik:ChartDefaultView.ChartLegend>
-                                </telerik:ChartDefaultView>
-                            </telerik:RadChart.DefaultView>
-                        </telerik:RadChart>
-                    </telerik:RadBusyIndicator>
+                                <telerik:ChartDefaultView.ChartLegend>
+                                    <telerik:ChartLegend Visibility="Collapsed" />
+                                </telerik:ChartDefaultView.ChartLegend>
+                            </telerik:ChartDefaultView>
+                        </telerik:RadChart.DefaultView>
+                    </telerik:RadChart>
 
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Grid.Row="1" Grid.Column="0">
                         <TextBlock Text="Item Name" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
