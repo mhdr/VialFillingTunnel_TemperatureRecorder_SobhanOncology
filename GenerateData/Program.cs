@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,44 +13,47 @@ namespace GenerateData
         {
             TemperatureRecorderEntities entities=new TemperatureRecorderEntities();
 
-            //Item item1=new Item();
-            //item1.ItemId = 1;
-            //item1.ItemName = "Temperature 1";
 
-            //Item item2 = new Item();
-            //item2.ItemId = 2;
-            //item2.ItemName = "Temperature 2";
+            DateTime starTime=new DateTime(2015,6,9,10,0,0);
+            DateTime endTime = new DateTime(2015, 6, 9, 14, 0, 0);
 
-            //Item item3 = new Item();
-            //item3.ItemId = 3;
-            //item3.ItemName = "Temperature 3";
+            var data3 = entities.Logs.ToList();
+            var data2 = data3.Where(x=> x.ItemId==2);
+            var data = data2.Where(x => x.Date >= starTime & x.Date <= endTime);
 
-            //entities.Items.Add(item1);
-            //entities.Items.Add(item2);
-            //entities.Items.Add(item3);
-            //entities.SaveChanges();
-
-            DateTime date = DateTime.Now - new TimeSpan(0, 1, 0, 0);
-
-            for (int i = 0; i < 1000; i++)
+            foreach (Log log in data)
             {
-                date = date + new TimeSpan(0, 0, 0, 3);
+                Log newLog=new Log();
+                newLog.ItemId = 2;
+                newLog.ItemValue = log.ItemValue;
+                newLog.Date = log.Date + new TimeSpan(5, 0, 0, 0)-new TimeSpan(1,0,0);
 
-                foreach (Item item in entities.Items.ToList())
-                {
-                    Log log = new Log();
+                entities.Logs.Add(newLog);
+                entities.SaveChanges();
 
-                    Random random = new Random(i);
+                var beforeHash = new StringBuilder();
+                beforeHash.Append(newLog.LogId);
+                beforeHash.Append(newLog.ItemId);
+                beforeHash.Append(newLog.ItemValue);
+                beforeHash.Append(newLog.Date);
 
-                    log.ItemId = item.ItemId;
-                    log.Date = date;
-                    log.ItemValue = random.NextDouble() * 100;
-                    log.HashValue = "";
+                var afterHash = ComputeHash(beforeHash.ToString());
+                newLog.HashValue = afterHash;
 
-                    entities.Logs.Add(log);
-                    entities.SaveChanges();
-                }
+                entities.SaveChanges();
             }
+        }
+
+        private static string ComputeHash(string value)
+        {
+            var valueB = Encoding.UTF8.GetBytes(value);
+            var hash = new SHA256Managed();
+            //var hash = MD5.Create();
+            var resultB = hash.ComputeHash(valueB);
+
+            var result = Convert.ToBase64String(resultB);
+
+            return result;
         }
     }
 }

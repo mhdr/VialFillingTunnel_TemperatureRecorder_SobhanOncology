@@ -4,12 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TemperatureRecorderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TemperatureRecorderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Items">
           <Key>
             <PropertyRef Name="ItemId" />
           </Key>
-          <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ItemName" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Logs">
@@ -19,8 +19,8 @@
           <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemId" Type="int" Nullable="false" />
           <Property Name="ItemValue" Type="float" Nullable="false" />
-          <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="HashValue" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="HashValue" Type="nvarchar(max)" />
           <Property Name="TimeStamp" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <Association Name="FK_Logs_ToItems">
@@ -43,8 +43,7 @@
             <End Role="Logs" EntitySet="Logs" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TemperatureRecorderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -63,8 +62,8 @@
           <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ItemId" Type="Int32" Nullable="false" />
           <Property Name="ItemValue" Type="Double" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="HashValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="HashValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TimeStamp" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Item" Relationship="Self.FK_Logs_ToItems" FromRole="Logs" ToRole="Items" />
         </EntityType>

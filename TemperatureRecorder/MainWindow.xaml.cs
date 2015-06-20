@@ -110,7 +110,7 @@ namespace TemperatureRecorder
                 ComboBoxItemName.Items.Add(item.ItemName);
             }
 
-            Timer1.Interval = new TimeSpan(0, 0, 0, 5);
+            Timer1.Interval = new TimeSpan(0, 0, 0,60);
             Timer1.IsEnabled = true;
             Timer1.Tick += Timer1_Tick;
 
@@ -191,7 +191,7 @@ namespace TemperatureRecorder
 
                         if (item.ItemId == 1)
                         {
-                            if (item1Live.Count > 361)
+                            if (item1Live.Count > 61)
                             {
                                 item1Live.RemoveAt(0);
                             }
@@ -200,7 +200,7 @@ namespace TemperatureRecorder
                         }
                         else if (item.ItemId == 2)
                         {
-                            if (item2Live.Count > 361)
+                            if (item2Live.Count > 61)
                             {
                                 item2Live.RemoveAt(0);
                             }
@@ -209,7 +209,7 @@ namespace TemperatureRecorder
                         }
                         else if (item.ItemId == 3)
                         {
-                            if (item3Live.Count > 361)
+                            if (item3Live.Count > 61)
                             {
                                 item3Live.RemoveAt(0);
                             }
@@ -254,7 +254,7 @@ namespace TemperatureRecorder
 
                             if (item.ItemId == 1)
                             {
-                                if (item1Live.Count > 361)
+                                if (item1Live.Count > 61)
                                 {
                                     item1Live.RemoveAt(0);
                                 }
@@ -263,7 +263,7 @@ namespace TemperatureRecorder
                             }
                             else if (item.ItemId == 2)
                             {
-                                if (item2Live.Count > 361)
+                                if (item2Live.Count > 61)
                                 {
                                     item2Live.RemoveAt(0);
                                 }
@@ -272,7 +272,7 @@ namespace TemperatureRecorder
                             }
                             else if (item.ItemId == 3)
                             {
-                                if (item3Live.Count > 361)
+                                if (item3Live.Count > 61)
                                 {
                                     item3Live.RemoveAt(0);
                                 }
